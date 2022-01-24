@@ -22,3 +22,15 @@ def create_dataset(dataset, look_back=1):
 	return np.array(dataX), np.array(dataY)
 
 np.random.seed(458)
+
+df = read_csv(input_file, header=None, index_col=None, delimiter=',')
+
+all_y = df[5].values
+dataset=all_y.reshape(-1, 1)
+
+scaler = MinMaxScaler(feature_range=(0, 1))
+dataset = scaler.fit_transform(dataset)
+
+train_size = int(len(dataset) * 0.5)
+test_size = len(dataset) - train_size
+train, test = dataset[0:train_size,:], dataset[train_size:len(dataset),:]
