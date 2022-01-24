@@ -13,6 +13,8 @@ import time
 
 # 1 input, 1 output, 25 neurons, adam optimizer, dropout of ~0.1, 240 batch size, 1000 epochs, and 240 time step
 
+input_file = "[].csv"
+
 def create_dataset(dataset, look_back=1):
 	dataX, dataY = [], []
 	for i in range(len(dataset)-look_back-1):
