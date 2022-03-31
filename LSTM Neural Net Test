@@ -1,4 +1,4 @@
-# 1 input, 1 output, 25 neurons, adam optimizer, dropout of ~0.1, 240 batch size, 1000 epochs, and 240 time step
+# 1 input, 1 output, 25 neurons, adam, dropout ~0.1, 250 batch size, 2000 epochs, and 250 time step
 
 import numpy as np
 import math
@@ -37,7 +37,7 @@ train_size = int(len(dataset) * 0.5)
 test_size = len(dataset) - train_size
 train, test = dataset[0:train_size,:], dataset[train_size:len(dataset),:]
 
-look_back = 240
+look_back = 250
 trainX, trainY = create_dataset(train, look_back)
 testX, testY = create_dataset(test, look_back)
 
@@ -48,8 +48,8 @@ model = Sequential()
 model.add(LSTM(25, input_shape=(1, look_back)))
 model.add(Dropout(0.1))
 model.add(Dense(1))
-model.compile(loss='mse', optimizer='adam')
-model.fit(trainX, trainY, epochs=1000, batch_size=240, verbose=1)
+model.compile(loss = 'mse', optimizer = 'adam')
+model.fit(trainX, trainY, epochs = 2000, batch_size = 250, verbose = 1)
 
 trainPredict = model.predict(trainX)
 testPredict = model.predict(testX)
