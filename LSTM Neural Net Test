@@ -77,7 +77,6 @@ plt.plot(trainPredictPlot)
 print('testPrices:')
 testPrices = scaler.inverse_transform(dataset[test_size+look_back:])
 
-print('testPredictions:')
 print(testPredict)
 
 df = pd.DataFrame(data={"prediction": np.around(list(testPredict.reshape(-1)), decimals=2), "test_price": np.around(list(testPrices.reshape(-1)), decimals = 2)})
