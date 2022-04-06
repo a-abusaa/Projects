@@ -1,0 +1,26 @@
+The dataset being used contains patient data (both quantitative and categorical) and has a "target" variable of annualized medical costs billed to insurance.
+
+The dataset was curated for and originates from the book: Lantz, B. (2013). Machine learning with R. Packt Publishing.
+A .csv can be found at either of the following two links:
+
+https://www.kaggle.com/datasets/mirichoi0218/insurance
+https://github.com/stedy/Machine-Learning-with-R-datasets/blob/master/insurance.csv
+
+The datatset has 1,338 rows (observations) of patients with insurance, with multiple variables for measuring characteristics of each patient.
+The data was collected via demographic statistics from the U.S. Census Bureau.
+
+The variables are as follows:
+
+charges: numeric variable of annual medical charges billed to insurance ("target / response variable").	
+
+age: integer variable of age of patient (dataset excludes those above 64 as they are qualified for government health insurance).
+ 						
+sex: factor variable of patient's gender: male of female.
+ 						
+bmi: numeric variable of patient BMI.
+ 						
+children: integer variable of number of children / dependents covered by patient's insurance plan.
+ 						
+smoker: factor variable of if patient is a regular smoker: yes or no.
+ 						
+region: factor variable of patient's region of residence in the US: northeast, southeast, southwest, or northwest.
