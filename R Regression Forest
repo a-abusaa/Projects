@@ -1,0 +1,62 @@
+library('lsr')
+library('e1071')
+library('MASS')
+library('Metrics')
+library('ggplot2')
+library('dplyr')
+library('lattice')
+library('caret')
+library('randomForest')
+library('tidyverse')
+library('vip')
+library('caret')
+library('randomForest')
+library('ggplot2')
+
+insurance <- read.csv("insurance.csv", header = TRUE)
+insurance$sex <- as.factor(insurance$sex)
+insurance$smoker <- as.factor(insurance$smoker)
+insurance$region <- as.factor(insurance$region)
+
+#10-fold cross validation: 9 training, 1 validation fold
+#Cross validation w/ repetitions
+crossval <- trainControl(method = "repeatedcv", number = 10, classProbs = FALSE)
+
+#Regression Tree
+set.seed(63)
+regtree <- train(charges ~ ., data = insurance, method = "rpart",
+                 metric = "RMSE", trControl = crossval)
+
+#Random Forest
+set.seed(63)
+randfor <- train(charges ~ ., data = insurance, method = "rf",
+                 metric = "RMSE", trControl = crossval)
+                 
+summary(resamples(list(RT = regtree, RF = randfor)))
+
+print(randfor)
+
+#Try with randomForest pckg; see if it's easier to plot / evaluate model
+
+set.seed(700)
+
+randfor2 <- randomForest(charges ~ ., data = insurance, importance = TRUE)
+randfor2
+#RMSE = 4682.991672, R2 = 85.03%
+
+plot(c(1: 500), sqrt(randfor2$mse), xlab = "Number of Trees", ylab = "RMSE",
+     type = "l")
+     
+vip(randfor2, num_features = 6, geom = "point", include_type = TRUE)
+
+pred_frame <- data.frame(
+  Actual = insurance$charges,
+  RF_Predicted = randfor2$predicted
+)
+
+ggplot(pred_frame, aes(x = Actual, y = RF_Predicted)) +
+  geom_point() +
+  geom_abline(intercept = 0, slope = 1) +
+  xlab("Actual Charges") + ylab("RF Predicted Charges") +
+  ggtitle("Random Forest Method (n = 500, mtry = 2)") +
+  xlim(0, 65000) + ylim(0, 65000)
